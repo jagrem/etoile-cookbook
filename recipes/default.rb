@@ -49,7 +49,7 @@ package 'xscreensaver' do
 end
 
 # [LLVM](http://www.llvm.org) (LanguageKit)
-package 'llvm' do
+package 'llvm-3.4' do
   action :install
 end
 
@@ -107,3 +107,13 @@ end
 package 'discount' do
   action :install
 end
+
+# gnustep-make 2.6.6 or higher
+
+# gnustep-base trunk (1.24.6 misses some APIs required by CoreObject)
+
+# gnustep-gui trunk
+
+# gnustep-back trunk
+
+# libobjc2 trunk (other ObjC runtimes such as the one packaged with GCC won't work, and libobjc2 1.7 has buggy weak reference support)
