@@ -2,7 +2,7 @@
 # Cookbook Name:: etoile-cookbook
 # Recipe:: default
 #
-# Copyright 2014, YOUR_COMPANY_NAME
+# Copyright 2014, James McAuley
 #
 # All rights reserved - Do Not Redistribute
 #

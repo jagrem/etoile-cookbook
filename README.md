@@ -16,3 +16,9 @@ Usage
 =====
 
 `recipe['etoile-cookbook']`
+
+Author
+======
+
+Written by James McAuley.
+Released under the [Apache 2 License](LICENSE).
