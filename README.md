@@ -6,7 +6,14 @@ Etoile.
 Requirements
 ============
 
-Requires 'apt' cookbook.
+Platform
+--------
+* Ubuntu
+
+Cookbooks
+---------
+
+* 'apt'
 
 Attributes
 ==========
@@ -21,4 +28,7 @@ Author
 ======
 
 Written by James McAuley.
+
+Copyright 2014. All rights reserved.
+
 Released under the [Apache 2 License](LICENSE).
