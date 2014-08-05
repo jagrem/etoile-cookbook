@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: etoile
+# Cookbook Name:: etoile-cookbook
 # Recipe:: default
 #
 # Copyright 2014, YOUR_COMPANY_NAME
