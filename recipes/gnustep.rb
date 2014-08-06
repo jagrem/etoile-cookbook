@@ -22,8 +22,7 @@ package 'binutils' do
 end
 
 # iconv	If no glibc	1.7	current	Convert file encoding
-package 'libglib2.0-0' do
-  version "2.32.1-0ubuntu2"
+package 'libglib2.0-dev' do
   action :install
 end
 
@@ -33,9 +32,33 @@ package 'llvm-3.4' do
 end
 
 # gcc	Optional	2.95.3	current	GNU C & Objective-C Compiler
-package 'gcc-4.7-base' do
-    version "4.7.2-0ubuntu3"
+package 'gobjc-4.6' do
     action :install
+end
+
+# X11
+package 'libx11-6' do
+  version "2:1.4.99.1-0ubuntu2.1"
+  action :install
+end
+
+package 'libx11-dev' do
+  version "2:1.4.99.1-0ubuntu2.1"
+  action :install
+end
+
+package 'libxt-dev' do
+  version "1:1.1.1-2ubuntu0.1"
+  action :install
+end
+
+package 'libxext-dev' do
+  action :install
+end
+
+package 'xserver-xorg-dev' do
+  version "2:1.11.4-0ubuntu10.14"
+  action :install
 end
 
 # libffi	Required	3.0.9	3.0.13	Message forwarding
@@ -55,7 +78,14 @@ end
 
 # openssl	Recommended	0.9.6b	current	SSL and TSL support
 package 'openssl' do
-  version "1.0.1-4ubuntu5.16"
+  action :install
+end
+
+package 'libssl-dev' do
+  action :install
+end
+
+package 'libgnutls-dev' do
   action :install
 end
 
@@ -67,7 +97,6 @@ end
 
 # libpng	Recommended	-	-	PNG image support
 package 'libpng3' do
-  version "1.2.46-3ubuntu4"
   action :install
 end
 
@@ -89,6 +118,10 @@ end
 
 package 'libxslt1-dev' do
   version "1.1.26-8ubuntu1.3"
+  action :install
+end
+
+package 'libicu-dev' do
   action :install
 end
 
