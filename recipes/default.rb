@@ -7,6 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 include_recipe "apt"
+include_recipe "etoile-cookbook::gnustep"
 
 # libpng (IconKit)
 package 'libpng3' do
@@ -107,13 +108,3 @@ end
 package 'discount' do
   action :install
 end
-
-# gnustep-make 2.6.6 or higher
-
-# gnustep-base trunk (1.24.6 misses some APIs required by CoreObject)
-
-# gnustep-gui trunk
-
-# gnustep-back trunk
-
-# libobjc2 trunk (other ObjC runtimes such as the one packaged with GCC won't work, and libobjc2 1.7 has buggy weak reference support)
