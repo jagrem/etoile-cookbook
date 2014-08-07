@@ -108,3 +108,22 @@ end
 package 'discount' do
   action :install
 end
+
+package 'git' do
+  action :install
+end
+
+git "#{Chef::Config[:file_cache_path]}/etoile" do
+  repository "git://github.com/etoile/Etoile.git"
+  reference "master"
+  action :sync
+end
+
+execute "Compile Etoile source" do
+  cwd "#{Chef::Config[:file_cache_path]}/etoile"
+  command <<-EOF
+    ./etoile-fetch.sh
+    sudo -E make install
+    EOF
+  action :run
+end
