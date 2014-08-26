@@ -7,123 +7,117 @@
 # All rights reserved - Do Not Redistribute
 #
 include_recipe "apt"
-include_recipe "etoile-cookbook::gnustep"
 
-# libpng (IconKit)
-package 'libpng3' do
+package "build-essential" do
   action :install
 end
 
-# [zlib](http://www.zlib.net/) (LuceneKit)
-package 'zlib-bin' do
+package "git" do
   action :install
 end
 
-# [OniGuruma](http://www.geocities.jp/kosako3/oniguruma/) 5.0 or higher (OgreKit)
-package 'libonig2' do
+package "subversion" do
   action :install
 end
 
-# [D-Bus](http://www.freedesktop.org/wiki/Software_2fdbus) 1.0 or higher (System)
-package 'libdbus-1-3' do
+package "ninja" do
   action :install
 end
 
-# [HAL](http://www.freedesktop.org/wiki/Software_2fhal) (System)
-package 'hal' do
+package "cmake" do
   action :install
 end
 
-# [startup-notification](http://www.freedesktop.org/wiki/Software_2fstartup_2dnotification) (Azalea)
-package 'libstartup-notification0' do
+package "libffi-dev" do
   action :install
 end
 
-# [Xcursor](http://www.freedesktop.org/wiki/Software_2fxlibs) (Azalea)
-package 'libxcursor1' do
+package "libxml2-dev" do
   action :install
 end
 
-# [XScreenSaver](http://www.jwz.org/xscreensaver/) (Idle)
-package 'xscreensaver' do
+package "libgnutls-dev" do
   action :install
 end
 
-# [LLVM](http://www.llvm.org) (LanguageKit)
-package 'llvm-3.4' do
+package "libicu-dev" do
   action :install
 end
 
-# [Lemon](http://www.hwaci.com/sw/lemon/) (Smalltalk and EScript)
-package 'lemon' do
+package "libblocksruntime-dev" do
   action :install
 end
 
-# [GMP](http://gmplib.org/) (Smalltalk)
-# May have to build from source
-package 'libgmp10' do
+package "libkqueue-dev" do
   action :install
 end
 
-# [libdispatch](https://libdispatch.macosforge.org/) (CoreObject)
-package 'libdispatch0' do
+package "libpthread-workqueue-dev" do
   action :install
 end
 
-# [SQLite](http://www.sqlite.org) 3.7 or higher (CoreObject)
-package 'sqlite' do
+package "autoconf" do
   action :install
 end
 
-# [libavcodec and libavformat](http://ffmpeg.mplayerhq.hu/) (MediaKit)
-package 'libavcodec53' do
+package "libtool" do
   action :install
 end
 
-package 'libavformat53' do
+package "llvm" do
   action :install
 end
 
-# [OSS](http://www.opensound.com/) (MediaKit)
-package 'oss4-base' do
+package "clang" do
   action :install
 end
 
-# [TagLib](http://developer.kde.org/~wheeler/taglib.html) (Melodie)
-package 'libtag1c2a' do
-  action :install
-end
-
-# [libmp4v2](http://www.mpeg4ip.net/) (Melodie)
-package 'libmp4v2-2' do
-  action :install
-end
-
-# [Graphviz](http://www.graphviz.org/) (DocGenerator)
-package 'graphviz' do
-  action :install
-end
-
-# [Discount](http://www.pell.portland.or.us/~orc/Code/discount/) (DocGenerator)
-package 'discount' do
-  action :install
-end
-
-package 'git' do
-  action :install
-end
-
-git "#{Chef::Config[:file_cache_path]}/etoile" do
-  repository "git://github.com/etoile/Etoile.git"
-  reference "master"
+git "#{Chef::Config[:file_cache_path]}/libdispatch" do
+  repository "git://github.com/nickhutchinson/libdispatch.git"
   action :sync
 end
 
-execute "Compile Etoile source" do
-  cwd "#{Chef::Config[:file_cache_path]}/etoile"
-  command <<-EOF
-    ./etoile-fetch.sh
-    sudo -E make install
-    EOF
-  action :run
+subversion "#{Chef::Config[:file_cache_path]}/core" do
+  repository "http://svn.gna.org/svn/gnustep/modules/core"
+  action :sync
+end
+
+subversion "#{Chef::Config[:file_cache_path]}/libobjc2" do
+  repository "http://svn.gna.org/svn/gnustep/libs/libobjc2/trunk"
+  action :sync
+end
+
+bash "Compile" do
+  code <<-EOF
+  echo "export CC=clang"  >> ~/.bashrc
+  echo "export CXX=clang++" >> ~/.bashrc
+  source ~/.bashrc
+
+  cd /var/chef/cache/libobjc2
+  mkdir build
+  cd build
+  cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ ..
+  make
+  sudo -E make install
+
+  cd /var/chef/cache/core/make
+  ./configure CC=clang CXX=clang++ --enable-debug-by-default --with-layout=gnustep --enable-objc-nonfragile-abi
+  make && sudo -E make install
+  echo ". /usr/GNUstep/System/Library/Makefiles/GNUstep.sh" >> ~/.bashrc
+  source ~/.bashrc
+
+  sudo /sbin/ldconfig
+
+  cd /var/chef/cache/core/base
+  ./configure CC=clang CXX=clang++ GNUSTEP_MAKEFILES=/usr/GNUstep/System/Library/Makefiles
+  make
+  sudo -E make install
+
+  cd /var/chef/cache/libdispatch
+  sh autogen.sh
+  ./configure CFLAGS="-I/usr/include/kqueue" LDFLAGS="-lkqueue -lpthread_workqueue -pthread -lm"
+  make
+  sudo -E make install
+  sudo ldconfig
+EOF
 end
