@@ -8,7 +8,7 @@ Requirements
 
 Platform
 --------
-* Ubuntu
+* Ubuntu 'Trusty'
 
 Cookbooks
 ---------
