@@ -104,27 +104,30 @@ end
 bash "Configure and make GNUstep base" do
   cwd "#{Chef::Config[:file_cache_path]}/core/make"
   code <<-EOF
-    /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
-    ./configure --disable-mixedabi --with-ffi-include=/usr/include/`gcc -dumpmachine` CC=clang CXX=clang++
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+    ./configure --disable-mixedabi --with-ffi-include=/usr/include/`gcc -dumpmachine` --with-installation-domain=SYSTEM CC=clang CXX=clang++
     make messages=yes && make install
   EOF
 end
 
-#
-#   cd ../../core/gui
-#   ./configure && make && sudo -E make install
-#
-#   cd ../../core/back
-#   ./configure && make && sudo -E make install
-#
-# You can check you are really using Clang and not GCC with 'make messages=yes' instead of 'make' when building a GNUstep module.
-# You can switch back to GCC for a given project with 'make CC=gcc' (or alternatively './configure CC=gcc').
-#
-# To get an overview of the build options per module, you can use './configure --help' in each module directory.
-#
-# See also [GNUstep](http://www.gnustep.org/) for further information.
-#
-#
+bash "Configure and make GNUstep gui" do
+  cwd "#{Chef::Config[:file_cache_path]}/core/gui"
+  code <<-EOF
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+    ./configure CC=clang CXX=clang++
+    make messages=yes && make install
+  EOF
+end
+
+bash "Configure and make GNUstep back" do
+  cwd "#{Chef::Config[:file_cache_path]}/core/back"
+  code <<-EOF
+    . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
+    ./configure CC=clang CXX=clang++
+    make messages=yes && make install
+  EOF
+end
+
 # Build and Install Etoile
 # ------------------------
 #
