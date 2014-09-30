@@ -102,7 +102,7 @@ bash "Configure and make GNUstep Make" do
 end
 
 bash "Configure and make GNUstep base" do
-  cwd "#{Chef::Config[:file_cache_path]}/core/make"
+  cwd "#{Chef::Config[:file_cache_path]}/core/base"
   code <<-EOF
     . /usr/GNUstep/System/Library/Makefiles/GNUstep.sh
     ./configure --disable-mixedabi --with-ffi-include=/usr/include/`gcc -dumpmachine` --with-installation-domain=SYSTEM CC=clang CXX=clang++
