@@ -7,11 +7,9 @@ The Etoile cookbook is used to provision a development server for developing
 applications using the [Etoile](http://etoileos.com/) libraries.
 
 The LLVM and Clang packages for Ubuntu 14.04 are used however GNUstep, libobjc2,
-libdispatch and Etoile are compiled from source.
-
-By default GNUstep is installed in `/usr/GNUstep` as are Etoile frameworks, bundles, etc.
-
-Usually you will want to source `/usr/GNUstep/System/Library/Makefiles/GNUstep.sh` in your
+libdispatch and Etoile are compiled from source. By default GNUstep is installed
+in `/usr/GNUstep` as are Etoile frameworks, bundles, etc. Usually you will want
+to source `/usr/GNUstep/System/Library/Makefiles/GNUstep.sh` in your
 `.bashrc` or from the command line.
 
 This cookbook is intended to be used with Vagrant for creating a functioning
