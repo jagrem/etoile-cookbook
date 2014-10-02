@@ -1,5 +1,6 @@
 etoile-cookbook
 ===============
+[![Build Status](https://travis-ci.org/jagrem/etoile-cookbook.svg?branch=master)](https://travis-ci.org/jagrem/etoile-cookbook)
 
 Description
 -----------
